@@ -16,12 +16,15 @@ final class DetailViewControllerTest: XCTestCase {
     
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         sut = storyboard.instantiateViewController(withIdentifier: String(describing: DetailViewController.self)) as? DetailViewController
         sut.loadViewIfNeeded()
     }
 
-    override func tearDownWithError() throws {}
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+    }
 
    
     //в vc действительно находится ярлык
