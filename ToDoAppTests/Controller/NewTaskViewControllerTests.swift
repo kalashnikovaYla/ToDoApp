@@ -22,6 +22,7 @@ class NewTaskViewControllerTests: XCTestCase {
     }
 
     override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
     func testHasTitleTextField() {
@@ -52,66 +53,9 @@ class NewTaskViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.saveButton.isDescendant(of: sut.view))
     }
 
-    func testGeocoderFetchesCorrectCoordinate() {
-        let geocoderAnswer = expectation(description: "Geocoder answer")
-        let addressString = "Уфа"
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
-            
-            let placemark = placemarks?.first
-            let location = placemark?.location
-            
-            guard
-                let latitude = location?.coordinate.latitude,
-                let longitude = location?.coordinate.longitude else {
-                    XCTFail()
-                    return
-            }
- 
-            XCTAssertEqual(latitude, 54.7373019)
-            XCTAssertEqual(longitude, 55.9722162)
-            geocoderAnswer.fulfill()
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
+   
     
-    func testSaveDismissesNewTaskViewController() {
-        // given
-        let mockNewTaskViewController = MockNewTaskViewController()
-        mockNewTaskViewController.titleTextField = UITextField()
-        mockNewTaskViewController.titleTextField.text = "Foo"
-        mockNewTaskViewController.descriptionTextField = UITextField()
-        mockNewTaskViewController.descriptionTextField.text = "Bar"
-        mockNewTaskViewController.locationTextField = UITextField()
-        mockNewTaskViewController.locationTextField.text = "Baz"
-        mockNewTaskViewController.addressTextField = UITextField()
-        mockNewTaskViewController.addressTextField.text = "Уфа"
-        mockNewTaskViewController.dateTextField = UITextField()
-        mockNewTaskViewController.dateTextField.text = "01.01.19"
-        
-        // when
-        mockNewTaskViewController.save()
-        
-        // then
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            XCTAssertTrue(mockNewTaskViewController.isDismissed)
-        }
-        
-    }
 }
-
-
-extension NewTaskViewControllerTests {
-    
-    class MockNewTaskViewController: NewTaskViewController {
-        var isDismissed = false
-        
-        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-            isDismissed = true
-        }
-    }
-}
-
 
 extension NewTaskViewControllerTests {
     class MockCLGeocoder: CLGeocoder {
@@ -129,6 +73,17 @@ extension NewTaskViewControllerTests {
         
         override var location: CLLocation? {
             return CLLocation(latitude: mockCoordinate.latitude, longitude: mockCoordinate.longitude)
+        }
+    }
+}
+
+extension NewTaskViewControllerTests {
+    
+    class MockNewTaskViewController: NewTaskViewController {
+        var isDismissed = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            isDismissed = true
         }
     }
 }

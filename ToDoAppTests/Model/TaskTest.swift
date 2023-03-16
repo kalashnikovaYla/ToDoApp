@@ -8,7 +8,6 @@
 
 
 import XCTest
-import CoreLocation
 @testable import ToDoApp
 
 class TaskTests: XCTestCase {
@@ -67,8 +66,6 @@ class TaskTests: XCTestCase {
         XCTAssertEqual(task, createdTask)
     }
     
-   
-    
     func testCanBeSerializedIntoDictionary() {
         let location = Location(name: "Baz")
         let date = Date(timeIntervalSince1970: 10)
@@ -80,3 +77,4 @@ class TaskTests: XCTestCase {
     }
 }
 
+ 

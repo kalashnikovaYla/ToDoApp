@@ -12,6 +12,7 @@ struct Task {
     let description: String?
     let date: Date
     let location: Location?
+    var isDone = false
     
     var dict: [String : Any] {
         var dict: [String : Any] = [:]
@@ -36,16 +37,11 @@ struct Task {
 }
 
 extension Task {
-    
-    //Когда вы работаете со структурами и хотите сохранить ваш дефолтный инициализатор, который доступен структурам, инит нужно писать в отдельных extension
-    
     typealias PlistDictionary = [String : Any]
-    
     init?(dict: PlistDictionary) {
         self.title = dict["title"] as! String
         self.description = dict["description"] as? String
         self.date = dict["date"] as? Date ?? Date()
-        
         if let locationDictionary = dict["location"] as? [String : Any] {
             self.location = Location(dict: locationDictionary)
         } else {

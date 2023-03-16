@@ -31,6 +31,7 @@ class DataProviderTests: XCTestCase {
     }
 
     override func tearDown() {
+        sut.taskManager?.removeAll()
         super.tearDown()
     }
     

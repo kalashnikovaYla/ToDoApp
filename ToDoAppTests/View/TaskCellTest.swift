@@ -13,6 +13,7 @@ class TaskCellTests: XCTestCase {
     var cell: TaskCell!
     
     override func setUp() {
+        super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: String(describing: TaskListViewController.self)) as! TaskListViewController
         controller.loadViewIfNeeded()
@@ -82,8 +83,6 @@ class TaskCellTests: XCTestCase {
         XCTAssertEqual(cell.locationLabel.text, task.location?.name)
     }
     
-    
-    //
     func configureCellWithTask() {
         let task = Task(title: "Foo")
         cell.configure(withTask: task, done: true)
@@ -95,14 +94,14 @@ class TaskCellTests: XCTestCase {
         XCTAssertEqual(cell.titleLabel.attributedText, attributedString)
     }
     
-    func testDoneTaskDateLabelEqualsNil() {
+    func testDoneTaskDateLabelTextEqualsEmptyString() {
         configureCellWithTask()
-        XCTAssertNil(cell.dateLabel)
+        XCTAssertEqual(cell.dateLabel.text, "")
     }
     
-    func testDoneTaskLocationLabelEqualsNil() {
+    func testDoneTaskLocationLabelTextEqualsEmptyString() {
         configureCellWithTask()
-        XCTAssertNil(cell.locationLabel)
+        XCTAssertEqual(cell.locationLabel.text, "")
     }
 }
 
